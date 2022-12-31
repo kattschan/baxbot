@@ -23,11 +23,11 @@ if (!date.match(/\d{6}/)) {
   // Get the current year (two digits))
   const year = new Date().getFullYear().toString().slice(-2);
   // Set the date to the current date
-  var date = '${day} + ${month} + ${year}';
+  var date = `${day}${month}${year}`;
   console.log(date);
 
- bbcChannel === args[1];
- description === args.slice(2).join(" ");
+ bbcChannel = args[1];
+ description = args.slice(2).join(" ");
 }
 
 
@@ -45,18 +45,14 @@ if (!bbcChannel.match(/nc|wnc|1/) | !bbcChannel) {
 const { username, discriminator } = message.author;
 
 // Get the channel ID from the config file
-const channelID = client.config.reportChannel;
+const channelID = 1058620128436178954;
 
-// Get the channel object
-const channel = message.guild.channels.cache.get(channelID);
+// Send a message to the channel
 
-// Check if the channel doesn't exist
-if (!channel) {
-  return message.reply("The report channel doesn't exist");
-}
 
 // Send the report to the channel, and react with a checkmark and a cross
-channel.send(`**Report from ${username}#${discriminator}**\nTime: ${time}\nDate: ${date}\nDescription: ${description}`).then((msg) => {
+const Channel = message.guild.channels.cache.find(c => c.id === channelID)
+Channel.send(`**Report from ${username}#${discriminator}**\nTime: ${time}\nDate: ${date}\nDescription: ${description}`).then((msg) => {
   // Use msg.awaitReactions() to check if the user reacted with a checkmark or a cross
   msg.react("✅");
   msg.react("❌");
